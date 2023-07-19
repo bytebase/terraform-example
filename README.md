@@ -10,7 +10,7 @@ This is an example to use [Terraform Bytebase Provider](https://registry.terrafo
 # Terraform service account created in Bytebase
 
 - Email: terraform@service.bytebase.com
-- Password: bbs_0T4ksbMCI9bKcOKWnom7
+- Password: bbs_ahZfZeZhLZLnfvDeaVb1
 
 # Usage
 

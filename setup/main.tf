@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     bytebase = {
-      version = "0.0.8"
+      version = "0.0.9"
       # For local development, please use "terraform.local/bytebase/bytebase" instead
       source = "registry.terraform.io/bytebase/bytebase"
     }
@@ -11,7 +11,7 @@ terraform {
 provider "bytebase" {
   # You need to replace the account and key with your Bytebase service account.
   service_account = "terraform@service.bytebase.com"
-  service_key     = "bbs_0T4ksbMCI9bKcOKWnom7"
+  service_key     = "bbs_ahZfZeZhLZLnfvDeaVb1"
   # The Bytebase service URL. You can use the external URL in production.
   # Check the docs about external URL: https://www.bytebase.com/docs/get-started/install/external-url
   url = "https://tf.bytebase.com"
@@ -113,10 +113,9 @@ resource "bytebase_instance_role" "test" {
 
 # Create a new project
 resource "bytebase_project" "sample_project" {
-  resource_id    = local.project_id
-  title          = "Sample project"
-  key            = "SAM"
-  workflow       = "UI"
-  schema_version = "SCHEMA_VERSION_UNSPECIFIED"
-  schema_change  = "DDL"
+  resource_id   = local.project_id
+  title         = "Sample project"
+  key           = "SAM"
+  workflow      = "UI"
+  schema_change = "DDL"
 }

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     bytebase = {
-      version = "0.0.9"
+      version = "1.0.0"
       # For local development, please use "terraform.local/bytebase/bytebase" instead
       source = "registry.terraform.io/bytebase/bytebase"
     }
@@ -48,13 +48,13 @@ resource "bytebase_environment" "prod" {
 # You can replace the parameters with your real instance
 resource "bytebase_instance" "test" {
   resource_id = local.instance_id_test
-  environment = bytebase_environment.test.resource_id
+  environment = bytebase_environment.test.name
   title       = "Test Sample Instance"
   engine      = "POSTGRES"
 
   # You need to specific the data source
   data_sources {
-    title    = "admin data source"
+    id       = "64065943-6ce5-4d50-b145-5c0ddb952a74"
     type     = "ADMIN"
     username = "bbsample"
     password = ""
@@ -66,13 +66,13 @@ resource "bytebase_instance" "test" {
 # Create a new instance named "prod instance"
 resource "bytebase_instance" "prod" {
   resource_id = local.instance_id_prod
-  environment = bytebase_environment.prod.resource_id
+  environment = bytebase_environment.prod.name
   title       = "Prod Sample Instance"
   engine      = "POSTGRES"
 
   # You need to specific the data source
   data_sources {
-    title    = "admin data source"
+    id       = "055c4790-e624-4248-8500-1803febb373c"
     type     = "ADMIN"
     username = "bbsample"
     password = ""
@@ -82,7 +82,7 @@ resource "bytebase_instance" "prod" {
 
   # Add another data_sources with RO type
   data_sources {
-    title    = "read-only data source"
+    id       = "479b2901-f8f5-49d6-85d7-f5962f2e58da"
     type     = "READ_ONLY"
     username = local.readonly_role_name
     password = local.readonly_role_pwd
@@ -91,31 +91,9 @@ resource "bytebase_instance" "prod" {
   }
 }
 
-# Create a new role named "role_test_terraform" in the instance "test-sample-instance"
-resource "bytebase_instance_role" "test" {
-  name     = local.readonly_role_name
-  instance = bytebase_instance.test.resource_id
-
-  password         = local.readonly_role_pwd
-  connection_limit = 10
-  valid_until      = "2050-12-31T00:00:00+08:00"
-
-  attribute {
-    super_user  = false
-    no_inherit  = false
-    create_role = false
-    create_db   = false
-    can_login   = true
-    replication = false
-    bypass_rls  = false
-  }
-}
-
 # Create a new project
 resource "bytebase_project" "sample_project" {
-  resource_id   = local.project_id
-  title         = "Sample project"
-  key           = "SAM"
-  workflow      = "UI"
-  schema_change = "DDL"
+  resource_id = local.project_id
+  title       = "Sample project"
+  key         = "SAM"
 }

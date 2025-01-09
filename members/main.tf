@@ -1,4 +1,4 @@
-# Examples for query the instances
+# Examples for query users and groups
 terraform {
   required_providers {
     bytebase = {
@@ -18,31 +18,24 @@ provider "bytebase" {
   url = "https://tf.bytebase.com"
 }
 
-locals {
-  instance_id_test = "test-sample-instance"
-  instance_id_prod = "prod-sample-instance"
+# List all users
+data "bytebase_user_list" "all" {}
+
+output "all_users" {
+  value = data.bytebase_user_list.all
 }
 
-# List all instances in all environments
-data "bytebase_instance_list" "all" {}
-
-output "all_instances" {
-  value = data.bytebase_instance_list.all
+data "bytebase_group_list" "all" {
 }
 
-# Find a specific instance by name
-data "bytebase_instance" "test" {
-  resource_id = local.instance_id_test
+output "all_groups" {
+  value = data.bytebase_group_list.all
 }
 
-output "test_instance" {
-  value = data.bytebase_instance.test
+data "bytebase_group" "developers" {
+  name = "groups/developers@bytebase.com"
 }
 
-data "bytebase_instance" "prod" {
-  resource_id = local.instance_id_prod
-}
-
-output "prod_instance" {
-  value = data.bytebase_instance.prod
+output "developers_group" {
+  value = data.bytebase_group.developers
 }

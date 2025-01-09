@@ -1,4 +1,3 @@
-# Examples for query the instances
 terraform {
   required_providers {
     bytebase = {
@@ -18,22 +17,34 @@ provider "bytebase" {
   url = "https://tf.bytebase.com"
 }
 
-locals {
-  project_id = "project-sample"
+data "bytebase_setting" "approval_flow" {
+  name = "bb.workspace.approval"
 }
 
-# List all projects
-data "bytebase_project_list" "all" {}
-
-output "all_projects" {
-  value = data.bytebase_project_list.all
+data "bytebase_setting" "external_approval" {
+  name = "bb.workspace.approval.external"
 }
 
-# Find a specific project by name
-data "bytebase_project" "sample_project" {
-  resource_id = local.project_id
+data "bytebase_setting" "workspace_profile" {
+  name = "bb.workspace.profile"
 }
 
-output "sample_project" {
-  value = data.bytebase_project.sample_project
+data "bytebase_setting" "classification" {
+  name = "bb.workspace.data-classification"
+}
+
+output "approval_flow" {
+  value = data.bytebase_setting.approval_flow
+}
+
+output "external_approval" {
+  value = data.bytebase_setting.external_approval
+}
+
+output "workspace_profile" {
+  value = data.bytebase_setting.workspace_profile
+}
+
+output "classification" {
+  value = data.bytebase_setting.classification
 }
